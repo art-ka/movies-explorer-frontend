@@ -17,6 +17,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState("");
 
+  const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -33,7 +35,8 @@ function App() {
               <Route exact path='/'>
                 <Main />
               </Route>
-              <Route exact path='/movies'>
+              <Route exact path='/movies'
+              preloaderIsActive={preloaderIsActive} >
                 <Movies />
               </Route>
               <Route exact path='/saved-movies'>
