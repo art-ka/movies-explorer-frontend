@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import React from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { Switch, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -15,12 +15,14 @@ import './App.css';
 
 function App() {
 
-  const [currentUser, setCurrentUser] = React.useState("");
+  //const [currentUser, setCurrentUser] = React.useState("");
 
-  const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
+  //const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider 
+    // value={currentUser}
+    >
       <div className="page">
         <div className="page__content">
           <Header />
@@ -36,7 +38,8 @@ function App() {
                 <Main />
               </Route>
               <Route exact path='/movies'
-              preloaderIsActive={preloaderIsActive} >
+              // preloaderIsActive={preloaderIsActive} 
+              >
                 <Movies />
               </Route>
               <Route exact path='/saved-movies'>

@@ -1,0 +1,45 @@
+.header__logo {
+    margin-top: 18px;
+}
+
+.header {
+    width: 1140px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.header__menu {
+    display: flex;
+    justify-content: space-between;
+    width: 175px;
+}
+
+.header__link {
+    color: #000;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 29px;
+}
+
+.header__button {
+    margin-top: 21px;
+    border-style: none;
+    background: #2BE080;
+    border-radius: 3px; 
+    width: 76px;
+    height: 32px;
+}
+
+.header__button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.header__button:focus {
+    outline: 0;
+}
