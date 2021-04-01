@@ -1,5 +1,5 @@
 .about {
-    width: 1140px;
+    width: 89.06%;
     margin: auto;
     margin-top: 110px;
 }
@@ -20,7 +20,7 @@
     content: '';
     opacity: 0.7;
     border-bottom: 1px solid #000;
-    width: 1140px;
+    width: 89.06%;
     display: block;
     margin-top: 23px;
 }
@@ -49,7 +49,7 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 22px;
-    width: 660px;
+    width: 75.86%;
     margin-top: 0;
     margin-bottom: 99px;
 }
@@ -72,4 +72,103 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 100px;
+}
+
+@media screen and (max-width: 484px) and (min-width: 320px) {
+
+    .about__title {
+        font-size: 18px;
+        line-height: 22px;
+        padding-bottom: 28px;
+        margin-bottom: 60px;
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 658px) and (min-width: 320px) {
+    .about {
+        margin-top: 70px;
+    }
+
+    .about__photo {
+        width: 292px;
+        margin: auto;
+        order: 1;
+        margin-bottom: 40px;
+    }
+
+    .about__data {
+        margin-bottom: 70px;
+        flex-flow: wrap;
+    }
+
+    .about__name {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 20px;
+    }
+
+    .about__job {
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 20px;
+    }
+
+    .about__text {
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 40px;
+        width: 91.25%;
+    }
+
+    .about__description {
+        order: 2;
+    }
+}
+
+@media screen and (max-width: 810px) and (min-width: 658px) {
+
+    .about {
+        margin-top: 90px;
+    }
+
+    .about__title {
+        padding-bottom: 23px;
+    }
+
+    .about__name {
+        font-size: 40px;
+        line-height: 40px;
+        margin-bottom: 16px;
+    }
+
+    .about__job {
+        font-size: 12px;
+        line-height: 18px;
+        margin-bottom: 20px;
+    }
+
+    .about__text {
+        font-size: 12px;
+        line-height: 18px;
+        width: 87.92%;
+        margin-bottom: 87px;
+    }
+
+    .about__photo {
+        width: 255px;
+    }
+}
+
+@media screen and (max-width: 862px) and (min-width: 810px) {
+    .about__text {
+        margin-bottom: 70px;
+    }
+}
+
+
+@media screen and (max-width: 969px) and (min-width: 863px) {
+    .about__text {
+        width: 89.92%;
+    }
 }

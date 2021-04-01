@@ -3,7 +3,7 @@
 }
 
 .footer__block {
-    width: 1140px;
+    width: 89.06%;
     margin: auto;
     padding-top: 79px;
 }
@@ -25,7 +25,7 @@
     content: '';
     opacity: 0.7;
     border-bottom: 1px solid #E8E8E8;
-    width: 1140px;
+    width: 100%;
     display: block;
     padding-top: 20px;
 }
@@ -38,7 +38,6 @@
     font-weight: normal;
     font-size: 13px;
     line-height: 16px;
-    padding-bottom: 4px;
 }
 
 .footer__links {
@@ -55,4 +54,55 @@
 
 .footer__link:hover {
     opacity: 0.7;
+}
+
+@media screen and (max-width: 484px) and (min-width: 320px) {
+    .footer {
+        background: #FFF;
+    }
+
+    .footer__text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .footer__info {
+        flex-flow: wrap;
+        padding-top: 30px;
+        font-size: 12px;
+        line-height: 15px;
+        padding-bottom: 10px;
+        width: 100px;
+        height: 130px;
+        margin: auto;
+    }
+
+    .footer__links {
+        flex-flow: wrap;
+        align-items: center;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .footer__link {
+        margin-left: 0;
+        margin: auto;
+    }
+
+    .footer__year {
+        order: 3;
+        margin-top: 30px;
+        margin: auto;
+        color: #A0A0A0;
+    }
+
+    .footer__link_size_mobile {
+        margin-left: 30px;
+    }
+
+    .footer__link_size_last {
+        margin: auto;
+        margin-left: 20px;
+    }
+
 }
