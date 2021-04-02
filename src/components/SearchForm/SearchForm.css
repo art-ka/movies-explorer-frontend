@@ -1,0 +1,40 @@
+.searchform {
+    width: 89.06%;
+    margin: auto;
+    margin-top: 42px;
+    margin-bottom: 0;
+}
+
+.searchform__data {
+    display: flex;
+    justify-content: left;
+    gap: none;
+}
+
+.searchform__input {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #E8E8E8;
+    margin-bottom: 33px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    color: #A0A0A0;
+    outline: none;
+}
+
+.searchform__button {
+    display: block;
+    outline: none;
+    border: none;
+    background: #fff;
+    margin-bottom: 33px;
+    padding-top: 10px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.searchform__button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
