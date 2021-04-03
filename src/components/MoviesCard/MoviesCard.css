@@ -1,0 +1,56 @@
+.moviescard {
+    max-width: 270px;
+
+}
+
+.moviescard__title {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    max-width: 206px;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+
+.moviescard__like-button {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+}
+
+.moviescard__like-button:hover {
+    opacity: .4;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.moviescard__delete-button_hidden {
+    visibility: hidden;
+}
+
+.moviescard__time {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    color: #A0A0A0;
+    margin-bottom: 0;
+    padding-top: 6px;
+}
+
+.moviescard__info {
+    display: flex;
+    justify-content: space-between;
+    max-width: 270px;
+}
+
+.moviescard__info::after {
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid #E8E8E8;
+    width: 270px;
+    display: block;
+    margin-top: 55px;
+}
+
