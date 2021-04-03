@@ -34,3 +34,29 @@
     transition-duration: .5s;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) and (min-width: 320px) {
+    
+    .movieslist__card {
+        grid-template-columns: repeat(auto-fill, 300px);
+        gap: 34px;
+}
+
+    .movieslist {
+        width: 93.75%;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 1260px) and (min-width: 768px) {
+    
+    .movieslist__card {
+        grid-template-columns: repeat(auto-fill, 339px);
+        gap: 30px;
+}
+
+    .movieslist {
+        width: 92.19%;
+        margin: auto;
+    }
+}
