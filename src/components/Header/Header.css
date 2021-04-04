@@ -1,19 +1,17 @@
-.header__logo {
-    margin-top: 18px;
-}
-
 .header {
     width: 89.06%;
     margin: auto;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 38px;
+    margin-top: 18px;
 }
 
 .header__menu {
     display: flex;
     justify-content: space-between;
     width: 175px;
+    margin-bottom: 21px;
+    margin-bottom: 21px;
 }
 
 .header__link {
@@ -23,11 +21,11 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    margin-top: 29px;
+    margin-top: 11px;
 }
 
 .header__button {
-    margin-top: 21px;
+    margin-top: 3px;
     border-style: none;
     background: #2BE080;
     border-radius: 3px; 

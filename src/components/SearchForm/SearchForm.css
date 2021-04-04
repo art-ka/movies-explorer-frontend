@@ -1,7 +1,7 @@
 .searchform {
     width: 89.06%;
     margin: auto;
-    margin-top: 42px;
+    margin-top: 70px;
     margin-bottom: 0;
 }
 
@@ -49,5 +49,16 @@
 
     .searchform__button {
         padding-bottom: 3px;
+    }
+
+    .searchform {
+        margin-top: 80px;
+    }
+}
+
+@media screen and (max-width: 900px) and (min-width: 768px) {
+
+    .searchform {
+        margin-top: 90px;
     }
 }
