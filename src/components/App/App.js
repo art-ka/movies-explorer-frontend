@@ -8,8 +8,10 @@ import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import Page404 from '../Page404/Page404';
 
 import './App.css';
+
 
 function App() {
 
@@ -18,7 +20,7 @@ function App() {
   //const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
 
   return (
-    <CurrentUserContext.Provider 
+    <CurrentUserContext.Provider
     // value={currentUser}
     >
       <div className="page">
@@ -34,9 +36,7 @@ function App() {
               <Route exact path='/'>
                 <Main />
               </Route>
-              <Route exact path='/movies'
-              // preloaderIsActive={preloaderIsActive} 
-              >
+              <Route exact path='/movies'>
                 <Movies />
               </Route>
               <Route exact path='/saved-movies'>
@@ -44,6 +44,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route path="*">
+                <Page404 />
               </Route>
             </Switch>
           </div>
