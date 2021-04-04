@@ -1,14 +1,14 @@
-.register {
+.form {
     width: 30.94%;
     margin: auto;
     margin-top: 70px;
 }
 
-.register__logo {
+.form__logo {
     margin-bottom: 40px;
 }
 
-.register__welcome {
+.form__welcome {
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -17,7 +17,7 @@
     margin-bottom: 40px;
 }
 
-.register__button-container {
+.form__button-container {
     background: #2BE080;
     outline: none;
     border: none;
@@ -33,7 +33,7 @@
     padding-right: 0;
 }
 
-.register__field {
+.form__field {
     width: 96.21%;
     height: 46px;
     font-style: normal;
@@ -51,11 +51,11 @@
     margin-top: 0;
 }
 
-.register__field:invalid:not(:focus) {
+.form__field:invalid:not(:focus) {
     color: #EE3465;
 }
 
-.register__signin {
+.form__signin {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -65,7 +65,7 @@
     margin-top: 16px;
 }
 
-.register__login-link {
+.form__login-link {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -75,20 +75,20 @@
     text-decoration: none;
 }
 
-.register__button-container:hover {
+.form__button-container:hover {
     opacity: 0.8;
     cursor: pointer;
     transition-duration: .5s;
 }
 
-.register__field:-webkit-autofill {
+.form__field:-webkit-autofill {
     box-shadow: none;
     -webkit-box-shadow: inset 0 0 0 50px #F9F9F9 !important; /* Цвет фона */
     -webkit-text-fill-color: #000 !important; /* цвет текста */
     color: #000 !important; /* цвет текста */
 }
 
-.register__name {
+.form__name {
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
@@ -97,7 +97,7 @@
     margin-top: 20px;
 }
 
-.register__field-error {
+.form__field-error {
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
@@ -107,37 +107,43 @@
 }
 
 @media screen and (max-width: 500px) and (min-width: 320px) {
-    .register {
+    .form {
         width: 81.25%;
         margin-top: 56px;
     }
 
-    .register__logo {
+    .form__logo {
         margin-bottom: 50px;
         display: block;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .register__welcome {
+    .form__welcome {
         margin-bottom: 80px;
         text-align: center;
     }
 
-    .register__button-container {
+    .form__button-container {
         margin-top: 157px;
     }
 }
 
 @media screen and (max-width: 600px) and (min-width: 500px) {
-    .register {
+    .form {
         width: 70.56%;
     }
 }
 
 @media screen and (max-width: 850px) and (min-width: 600px) {
-    .register {
+    .form {
         width: 51.56%;
         margin-top: 232px;
+    }
+}
+
+@media screen and (max-width: 1080px) and (min-width: 850px) {
+    .form {
+        width: 40%;
     }
 }
