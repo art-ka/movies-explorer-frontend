@@ -14,6 +14,12 @@
     margin-bottom: 21px;
 }
 
+.header__menu_login_yes {
+    width: 381px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .header__link {
     color: #000;
     text-decoration: none;
@@ -31,6 +37,35 @@
     border-radius: 3px; 
     width: 76px;
     height: 32px;
+}
+
+.header__button_login_yes {
+    width: 100px;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    margin-top: 3px;
+    align-items: center;
+}
+
+.header__link_login_icon {
+    align-self: center;
+    margin-top: 0;
+    padding-top: 3px;
+}
+
+.header__akk_login_yes {
+    align-self: center;
+    margin-top: 0;
+}
+
+.header__icon {
+    margin-left: 7px;
+    background: #F9F9F9;
+    border-radius: 50px;
+    padding: 7.75px;
 }
 
 .header__button:hover {
