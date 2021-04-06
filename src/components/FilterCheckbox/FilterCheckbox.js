@@ -11,6 +11,7 @@ function FilterCheckbox(props) {
                     offColor="white"
                     onColor="#2be080"
                     className="checkbox__button"
+                    z-index="-1"
                 // checked={props.checked}
                 // onChange={checked => { }}
                 />
