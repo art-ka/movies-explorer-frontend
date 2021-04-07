@@ -253,7 +253,6 @@
 @media screen and (max-width: 768px) and (min-width: 500px) {
     .header {
         width: 92.19%;
-        z-index: 0;
     }
 
     .header__button_login_yes-active {

@@ -1,20 +1,14 @@
 import React from 'react';
 import './FilterCheckbox.css';
-import Switch from './Switch';
 
 function FilterCheckbox(props) {
     return (
         <section className="checkbox">
             <div className="checkbox__data">
-                <Switch
-                    handleColor="white"
-                    offColor="white"
-                    onColor="#2be080"
-                    className="checkbox__button"
-                    z-index="-1"
-                // checked={props.checked}
-                // onChange={checked => { }}
-                />
+                <label className="checkbox__switch">
+                    <input type="checkbox" className="checkbox__input"/>
+                    <span className="checkbox__slider"/>
+                </label>
                 <p className="checkbox__name">Короткометражки</p>
             </div>
         </section>
