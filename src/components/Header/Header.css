@@ -197,7 +197,6 @@
     .header__burger-menu {
         display: flex;
         z-index: 0;
-        position: absolute;
         right: 30px;
         top: 15px;
     }
