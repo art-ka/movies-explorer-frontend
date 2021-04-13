@@ -16,6 +16,7 @@ import './App.css';
 function App() {
 
   //const [currentUser, setCurrentUser] = React.useState("");
+  //const currentUser = React.useContext(CurrentUserContext);
 
   //const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
 
