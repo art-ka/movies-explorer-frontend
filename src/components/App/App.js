@@ -30,7 +30,7 @@ function App() {
       return;
     }
 
-    Api.takeUserInfo()
+    Api.getUserInfo()
       .then((userInfo) => {
         setCurrentUser(userInfo);
       })
@@ -98,7 +98,7 @@ function App() {
         if (res && res.error) {
           throw new Error(res.error)
         }
-        history.push('/movies');
+        history.push('/signin');
       })
       .catch((err) => {
         console.log(err);

@@ -3,7 +3,28 @@ import './Register.css';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
-function Register() {
+function Register(props) {
+
+    const [data, setData] = React.useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.onRegister(data.name, data.email, data.password)
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData({
+            ...data,
+            [name]: value,
+        }
+        )
+    }
+
     return (
         <section className="form">
             <Link to='/'>
@@ -12,18 +33,18 @@ function Register() {
             <p className="form__welcome">
                 Добро пожаловать!
         </p>
-            <form className="form__form">
+            <form className="form__form" onSubmit={handleSubmit}>
                 <p className="form__name">Имя</p>
                 <input className="form__field form__field_input_name" id="name" name="name" type="text"
-                    required minLength="2"/>
+                    required minLength="2" onChange={handleChange} />
                     <span id="name-error" class="form__field-error"></span>
                 <p className="form__name">E-mail</p>
                 <input className="form__field form__field_input_email" id="email" name="email" type="email"
-                    required />
+                    required onChange={handleChange} />
                     <span id="email-error" class="form__field-error"></span>
                 <p className="form__name">Пароль</p>
                 <input className="form__field form__field_input_password" id="password" name="password" type="password"
-                    required />
+                    required onChange={handleChange} />
                     <span id="password-error" class="form__field-error">Что-то пошло не так...</span>
                 <button type="submit" className="form__button-container">Зарегистрироваться</button>
             </form>
