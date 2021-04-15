@@ -36,11 +36,11 @@ function Login(props) {
                 <p className="form__name">E-mail</p>
                 <input className="form__field form__field_input_email" id="email" name="email" type="email"
                     required value={data.email} onChange={handleChange}/>
-                <span id="email-error" class="form__field-error"></span>
+                <span id="email-error" className="form__field-error"></span>
                 <p className="form__name">Пароль</p>
                 <input className="form__field form__field_input_password" id="password" name="password" type="password"
                     required onChange={handleChange} value={data.password} />
-                <span id="password-error" class="form__field-error"></span>
+                <span id="password-error" className="form__field-error"></span>
                 <button type="submit" className="form__button-container form__button-container_login">Войти</button>
             </form>
             <div className="form__signin">

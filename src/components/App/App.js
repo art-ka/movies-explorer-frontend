@@ -9,6 +9,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Page404 from '../Page404/Page404';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import './App.css';
 
@@ -100,6 +101,12 @@ function App() {
       });
   }
 
+//   React.useEffect(() => {
+//     if (isLoggedIn) {
+//         history.push('/movies');
+//     }
+// }, [history, isLoggedIn]);
+
   //поиск фильмов
 
 
@@ -121,17 +128,14 @@ function App() {
               <Route exact path='/'>
                 <Main loggedIn={isLoggedIn} />
               </Route>
-              <Route exact path='/movies' movies={movies} >
-                <Movies />
-              </Route>
-              <Route exact path='/saved-movies'>
-                <SavedMovies />
-              </Route>
-              <Route exact path='/profile'>
-                <Profile onUpdateUser={handleUpdateUser}
-                  onLogout={handleLogout} 
-                  loggedIn={isLoggedIn} />
-              </Route>
+              <ProtectedRoute path='/movies' movies={movies} loggedIn={isLoggedIn}
+              component={Movies} />
+              <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}
+              component={SavedMovies} />
+              <ProtectedRoute path='/profile' loggedIn={isLoggedIn}
+              component={Profile} 
+              onUpdateUser={handleUpdateUser} 
+              onLogout={handleLogout} />
               <Route path="*">
                 <Page404 />
               </Route>
