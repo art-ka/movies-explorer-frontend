@@ -5,28 +5,36 @@ import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
-
+    console.log(props);
     const currentUser = React.useContext(CurrentUserContext);
     const [data, setData] = React.useState({
-    name: "",
-    email: "",
+        name: currentUser.name || "",
+        email: currentUser.email || "",
     });
 
     React.useEffect(() => {
         setData({
-        name: currentUser.name || "",
-        email: currentUser.email || "",
+            name: currentUser.name || "",
+            email: currentUser.email || "",
         });
     }, [currentUser]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onUpdateUser(data.name, data.email);
+        props.onUpdateUser(data);
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData({
+            ...data,
+            [name]: value,
+        })
     }
 
     return (
         <section className="profile">
-            <Header />
+            <Header loggedIn={props.loggedIn} />
             <p className="profile__welcome">
                 Привет, {currentUser.name}!
             </p>
@@ -35,12 +43,13 @@ function Profile(props) {
                     Имя
             </label>
                 <input className="profile__field" id="name" name="name" type="text"
-                    required minLength="2" placeholder="Имя" value={data.name} />
+                    required minLength="2" placeholder="Имя" value={data.name} onChange={handleChange} />
                 <label className="profile__label">
                     E-mail
             </label>
-                <input className="profile__field" id="name" name="name" type="text"
-                    required minLength="2" placeholder="Имя" value={data.email} />
+                <input className="profile__field" id="email" name="email" type="email"
+                    required minLength="2" placeholder="email" value={data.email}
+                    onChange={handleChange} />
                 <button type="submit" className="profile__button">
                     Редактировать
                 </button>

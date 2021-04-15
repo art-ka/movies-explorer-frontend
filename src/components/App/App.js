@@ -19,7 +19,7 @@ import Api from '../../utils/MainApi';
 function App() {
 
   const [currentUser, setCurrentUser] = React.useState("");
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
   //const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
 
@@ -50,12 +50,6 @@ function App() {
   }
 
   React.useEffect(() => {
-    if (isLoggedIn) {
-      history.push('/movies');
-    }
-  }, [history, isLoggedIn]);
-
-  React.useEffect(() => {
     if (!isLoggedIn) {
       return;
     }
@@ -78,6 +72,7 @@ function App() {
           localStorage.setItem('jwt', res.token);
           Api.refreshToken();
           setLoggedIn(true);
+          setCurrentUser(res);
           history.push('/movies');
         }
       })
@@ -134,7 +129,8 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile onUpdateUser={handleUpdateUser}
-                  onLogout={handleLogout} />
+                  onLogout={handleLogout} 
+                  loggedIn={isLoggedIn} />
               </Route>
               <Route path="*">
                 <Page404 />
