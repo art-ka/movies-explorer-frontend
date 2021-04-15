@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import './Header.css';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, 
+    // useLocation 
+} from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import icon from '../../images/icon__COLOR_icon-main.svg'
 
 function Header(props) {
 
-    const location = useLocation();
-    const currentPath = location.pathname;
+    // const location = useLocation();
+    // const currentPath = location.pathname;
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -19,7 +21,7 @@ function Header(props) {
             <div className={`header__black ${showMenu ? "header__black-page" : ""
                 }`} />
 
-            {(currentPath === "/profile") || (currentPath === "/movies") || (currentPath === "/saved-movies") ?
+            {props.loggedIn ?
                 <>
                     <div className={`header__menu header__menu_login_yes
                         ${showMenu ? "header__menu_login_yes-active" : "header__menu_login_yes-hidden"

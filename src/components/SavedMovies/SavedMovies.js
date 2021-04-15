@@ -7,10 +7,10 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+function SavedMovies(props) {
     return (
         <>
-        <Header />
+        <Header loggedIn={props.loggedIn} />
         <SearchForm />
         {/* <Preloader />  */}
         <MoviesCardList />
