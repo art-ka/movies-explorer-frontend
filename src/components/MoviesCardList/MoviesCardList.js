@@ -3,25 +3,12 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList(props) {
+    console.log(props)
     return (
         <section className="movieslist">
+            <span className="movieslist__not-found">{props.message}</span>
             <ul className="movieslist__card">
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
+                {props.movies.map(movie => (<MoviesCard {...movie}/>))}
             </ul>
             <button className="movieslist__more">Ещё</button>
         </section>

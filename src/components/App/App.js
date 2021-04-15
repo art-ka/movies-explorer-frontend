@@ -21,8 +21,11 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState("");
   const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
-  //const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
+  const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
+  const [isMovieShort, setIsMovieShort] = React.useState(false);
+  // const [foundMovies, setFoundMovies] = React.useState([]);
+  const [message, setMessage] = React.useState('');
 
   const history = useHistory();
 
@@ -101,15 +104,72 @@ function App() {
       });
   }
 
-//   React.useEffect(() => {
-//     if (isLoggedIn) {
-//         history.push('/movies');
-//     }
-// }, [history, isLoggedIn]);
-
   //поиск фильмов
 
 
+
+
+  // function getMovies() {
+  //   ApiMovies.getMovies()
+  //     .then((res) => {
+  //       setMovies(res.data)
+  //     })
+  // }
+
+  // function searchMovie() {
+  //   movies.filter(movie => 
+  //     return movie.nameRU.toLowerCase().includes(foundMovies.toLowerCase())
+  //     )
+  // }
+
+  // function searchMovie(e) {
+  //   ApiMovies.getMovies()
+  //     .then((data) => {
+  //       const movie = data.filter((movie) => {
+  //         return movie.nameRU.toLowerCase().includes(e.target[0].value.toLowerCase())
+  //       })
+  //       if (movie.length === 0) {
+  //         console.log("data")
+  //         setMovies(movie)
+  //         setMessage('По данному запросу фильмов не найдено. Попробуйте другой запрос');
+  //       }
+
+  //       else {
+  //         localStorage.setItem("movies", JSON.stringify(movie));
+  //         setMovies(movie)
+  //         setMessage('');
+  //       }
+  //     })
+  // }
+
+  function searchMovie(search) {
+    if (isMovieShort) {
+      const shortMovie = movies.filter((movie) => {
+        return (
+          movie.duration <= 40 &&
+          movie.nameRU.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setMovies(shortMovie);
+      setMessage('');
+    } else {
+      const movie = movies.filter((movie) => {
+        return movie.nameRU.toLowerCase().includes(search.toLowerCase());
+      });
+      return setMovies(movie);
+    }
+  }
+
+  function Preloader() {
+    setPreloaderIsActive(true);
+    setTimeout(async () => {
+      setPreloaderIsActive(false);
+    }, 200);
+  }
+
+  function toggleCheckbox() {
+    setIsMovieShort(!isMovieShort);
+  }
 
   return (
     <CurrentUserContext.Provider
@@ -128,14 +188,24 @@ function App() {
               <Route exact path='/'>
                 <Main loggedIn={isLoggedIn} />
               </Route>
-              <ProtectedRoute path='/movies' movies={movies} loggedIn={isLoggedIn}
-              component={Movies} />
+              <ProtectedRoute path='/movies' 
+                movies={movies} 
+                loggedIn={isLoggedIn}
+                component={Movies}
+                onPreloader={Preloader}
+                onsearchMovie={searchMovie}
+                message={message}
+                ontoggleCheckbox={toggleCheckbox}
+                movieShort={isMovieShort}
+                preloaderIsActive={preloaderIsActive}
+                // foundMovies={foundMovies} 
+                />
               <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}
-              component={SavedMovies} />
+                component={SavedMovies} />
               <ProtectedRoute path='/profile' loggedIn={isLoggedIn}
-              component={Profile} 
-              onUpdateUser={handleUpdateUser} 
-              onLogout={handleLogout} />
+                component={Profile}
+                onUpdateUser={handleUpdateUser}
+                onLogout={handleLogout} />
               <Route path="*">
                 <Page404 />
               </Route>

@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import './MoviesCard.css';
 import likeButton from '../../images/save1d.svg';
 import likeButtonActive from '../../images/save2.svg';
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import movie from '../../images/movie.png';
+// import movie from '../../images/movie.png';
 // import del from '../../images/delete.svg';
 
 function MoviesCard(props) {
 
     const [saveButton, setSaveButton] = useState(false);
 
+    function durationMovie(min) {
+        const hours = Math.trunc(min / 60);
+        const minutes = min % 60;
+        return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+    }
+
+    console.log(props.image)
     return (
         <li className="moviescard">
-            <img className="moviescard__image" src={movie} alt="Gimme Danger: История Игги и The Stooges" />
+            <img className="moviescard__image" src={props.image && `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} />
             <div className="moviescard__info">
-                <h2 className="moviescard__title">Gimme Danger: История Игги и The Stooges</h2>
+                <h2 className="moviescard__title">{props.nameRU}</h2>
                 <button className="moviescard__like-button" type="button">
                     <img className="moviescard__like-image" 
                     src={saveButton ? likeButtonActive : likeButton} 
@@ -27,7 +33,9 @@ function MoviesCard(props) {
                     <img className="moviescard__delete-image" src={del} alt="Удалить из сохраненных" />
                 </button> */}
             </div>
-            <p className="moviescard__time">1ч42м</p>
+            <p className="moviescard__time">
+            {durationMovie(props.duration)}
+            </p>
         </li>
     )
 }

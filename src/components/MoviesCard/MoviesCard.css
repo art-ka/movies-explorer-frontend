@@ -13,6 +13,9 @@
 
 .moviescard__image {
     width: 270px;
+    height: 151px;
+    object-fit: cover;
+    object-position: top;
 }
 
 .moviescard__like-button {
