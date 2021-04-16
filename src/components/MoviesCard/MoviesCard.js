@@ -15,13 +15,18 @@ function MoviesCard(props) {
         return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
     }
 
-    console.log(props.image)
+    function handleSave(e) {
+        e.preventDefault();
+        props.onSaveMovie(props);
+    }
+
+    console.log(props)
     return (
-        <li className="moviescard">
+        <li className="moviescard" key="test">
             <img className="moviescard__image" src={props.image && `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} />
             <div className="moviescard__info">
                 <h2 className="moviescard__title">{props.nameRU}</h2>
-                <button className="moviescard__like-button" type="button">
+                <button className="moviescard__like-button" type="button" onClick={handleSave}>
                     <img className="moviescard__like-image" 
                     src={saveButton ? likeButtonActive : likeButton} 
                     onClick={() => setSaveButton(!saveButton)} alt="Поставить лайк" />

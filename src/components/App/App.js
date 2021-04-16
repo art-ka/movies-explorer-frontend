@@ -24,6 +24,7 @@ function App() {
   const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isMovieShort, setIsMovieShort] = React.useState(false);
+  const [saveMovie, setSaveMovie] = React.useState([]);
   // const [foundMovies, setFoundMovies] = React.useState([]);
   const [message, setMessage] = React.useState('');
 
@@ -104,43 +105,17 @@ function App() {
       });
   }
 
-  //поиск фильмов
+  //фильмы
 
-
-
-
-  // function getMovies() {
-  //   ApiMovies.getMovies()
-  //     .then((res) => {
-  //       setMovies(res.data)
-  //     })
-  // }
-
-  // function searchMovie() {
-  //   movies.filter(movie => 
-  //     return movie.nameRU.toLowerCase().includes(foundMovies.toLowerCase())
-  //     )
-  // }
-
-  // function searchMovie(e) {
-  //   ApiMovies.getMovies()
-  //     .then((data) => {
-  //       const movie = data.filter((movie) => {
-  //         return movie.nameRU.toLowerCase().includes(e.target[0].value.toLowerCase())
-  //       })
-  //       if (movie.length === 0) {
-  //         console.log("data")
-  //         setMovies(movie)
-  //         setMessage('По данному запросу фильмов не найдено. Попробуйте другой запрос');
-  //       }
-
-  //       else {
-  //         localStorage.setItem("movies", JSON.stringify(movie));
-  //         setMovies(movie)
-  //         setMessage('');
-  //       }
-  //     })
-  // }
+  function handleSaveMovie(dataMovie) {
+    Api.saveMovie(dataMovie)
+      .then((newMovie) => {
+        setSaveMovie([newMovie, ...saveMovie]);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   function searchMovie(search) {
     if (isMovieShort) {
@@ -188,8 +163,8 @@ function App() {
               <Route exact path='/'>
                 <Main loggedIn={isLoggedIn} />
               </Route>
-              <ProtectedRoute path='/movies' 
-                movies={movies} 
+              <ProtectedRoute path='/movies'
+                movies={movies}
                 loggedIn={isLoggedIn}
                 component={Movies}
                 onPreloader={Preloader}
@@ -198,8 +173,10 @@ function App() {
                 ontoggleCheckbox={toggleCheckbox}
                 movieShort={isMovieShort}
                 preloaderIsActive={preloaderIsActive}
-                // foundMovies={foundMovies} 
-                />
+                onSaveMovie={handleSaveMovie}
+                saveMovie={saveMovie}
+              // foundMovies={foundMovies} 
+              />
               <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}
                 component={SavedMovies} />
               <ProtectedRoute path='/profile' loggedIn={isLoggedIn}

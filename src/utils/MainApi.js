@@ -33,6 +33,7 @@ class Api {
     }
 
     saveMovie(movie) {
+        console.log(movie);
         return fetch(`${this.baseUrl}/movies`, {
             method: "POST",
             headers: this.headers,
@@ -42,13 +43,12 @@ class Api {
                 duration: movie.duration,
                 year: movie.year,
                 description: movie.description,
-                image: `https://api.nomoreparties.co${movie.image.url}`,
+                image: movie.image && `https://api.nomoreparties.co${movie.image.url}`,
                 trailer: movie.trailerLink,
-                thumbnail: movie.thumbnail,
+                thumbnail: movie.image && `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
                 movieId: movie.id,
                 nameRU: movie.nameRU,
                 nameEN: movie.nameEN,
-
             })
         })
         .then(checkResponse);

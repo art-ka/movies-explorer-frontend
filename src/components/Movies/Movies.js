@@ -17,7 +17,8 @@ function Movies(props) {
         />
         {/* <Preloader />  */}
         <MoviesCardList movies={props.movies} 
-        message={props.message} />
+        message={props.message} 
+        onSaveMovie={props.onSaveMovie} />
         <Footer />
         </>
     )

@@ -41,15 +41,15 @@ function Register(props) {
                 <p className="form__name">Имя</p>
                 <input className="form__field form__field_input_name" id="name" name="name" type="text"
                     required minLength="2" onChange={handleChange} />
-                    <span id="name-error" class="form__field-error">{errors.name}</span>
+                    <span id="name-error" className="form__field-error">{errors.name}</span>
                 <p className="form__name">E-mail</p>
                 <input className="form__field form__field_input_email" id="email" name="email" type="email"
                     required onChange={handleChange} />
-                    <span id="email-error" class="form__field-error">{errors.email}</span>
+                    <span id="email-error" className="form__field-error">{errors.email}</span>
                 <p className="form__name">Пароль</p>
                 <input className="form__field form__field_input_password" id="password" name="password" type="password"
                     required onChange={handleChange} />
-                    <span id="password-error" class="form__field-error">{errors.password}</span>
+                    <span id="password-error" className="form__field-error">{errors.password}</span>
                 <button type="submit" className="form__button-container">Зарегистрироваться</button>
             </form>
             <div className="form__signin">
