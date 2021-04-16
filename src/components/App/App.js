@@ -117,6 +117,17 @@ function App() {
       })
   }
 
+  function handleDeleteMovie(movie) {
+    Api.deleteMovie(movie.id)
+    .then(() => {
+      setSaveMovie(saveMovie.filter(
+        (m) => m.id !== movie.id));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   function searchMovie(search) {
     if (isMovieShort) {
       const shortMovie = movies.filter((movie) => {
@@ -175,6 +186,7 @@ function App() {
                 preloaderIsActive={preloaderIsActive}
                 onSaveMovie={handleSaveMovie}
                 saveMovie={saveMovie}
+                onDeleteMovie={handleDeleteMovie}
               // foundMovies={foundMovies} 
               />
               <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}

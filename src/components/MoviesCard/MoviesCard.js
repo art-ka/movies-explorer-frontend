@@ -8,6 +8,7 @@ import likeButtonActive from '../../images/save2.svg';
 function MoviesCard(props) {
 
     const [saveButton, setSaveButton] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     function durationMovie(min) {
         const hours = Math.trunc(min / 60);
@@ -18,6 +19,11 @@ function MoviesCard(props) {
     function handleSave(e) {
         e.preventDefault();
         props.onSaveMovie(props);
+    }
+
+    function handleDelete(e) {
+        e.preventDefault();
+        props.onDeleteMovie(props);
     }
 
     console.log(props)

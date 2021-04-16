@@ -18,7 +18,8 @@ function Movies(props) {
         {/* <Preloader />  */}
         <MoviesCardList movies={props.movies} 
         message={props.message} 
-        onSaveMovie={props.onSaveMovie} />
+        onSaveMovie={props.onSaveMovie} 
+        onDeleteMovie={props.onDeleteMovie} />
         <Footer />
         </>
     )
