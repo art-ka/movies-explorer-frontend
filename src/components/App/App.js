@@ -60,7 +60,17 @@ function App() {
     }
     ApiMovies.getMovies()
       .then((data) => {
-        setMovies(data);
+        Api.getMovies().then(savedData => {
+          data.forEach(movie => {
+            const savedMovie = savedData.find(savedMovie => movie.nameRU === savedMovie.nameRU);
+            if(savedMovie) {
+              console.log(`Saved movie: ${movie.nameRU}`);
+              movie.isSaved = true;
+              movie._id = savedMovie._id;
+            }
+          });
+          setMovies(data);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -118,11 +128,9 @@ function App() {
   }
 
   function handleDeleteMovie(movie) {
-    Api.deleteMovie(movie.id)
-    .then(() => {
-      setSaveMovie(saveMovie.filter(
-        (m) => m.id !== movie.id));
-    })
+    console.log(movie)
+    Api.deleteMovie(movie._id)
+    .then()
     .catch((err) => {
       console.log(err);
     })

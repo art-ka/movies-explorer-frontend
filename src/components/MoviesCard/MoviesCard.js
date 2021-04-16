@@ -7,8 +7,10 @@ import likeButtonActive from '../../images/save2.svg';
 
 function MoviesCard(props) {
 
-    const [saveButton, setSaveButton] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
+    // const [saveButton, setSaveButton] = useState(false);
+    const [isSaved, setIsSaved] = useState(props.isSaved);
+
+    const movieLikeButtonSRC = isSaved ? likeButtonActive : likeButton;
 
     function durationMovie(min) {
         const hours = Math.trunc(min / 60);
@@ -18,24 +20,27 @@ function MoviesCard(props) {
 
     function handleSave(e) {
         e.preventDefault();
-        props.onSaveMovie(props);
+        if (isSaved) {
+            console.log(`Delete movie: ${props.nameRU}`);
+            props.onDeleteMovie(props);
+        } else {
+            console.log(`Save movie: ${props.nameRU}`);
+            props.onSaveMovie(props);
+        }
+        setIsSaved(!isSaved);
+        
     }
 
-    function handleDelete(e) {
-        e.preventDefault();
-        props.onDeleteMovie(props);
-    }
-
-    console.log(props)
     return (
-        <li className="moviescard" key="test">
+
+        <li className="moviescard">
             <img className="moviescard__image" src={props.image && `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} />
             <div className="moviescard__info">
                 <h2 className="moviescard__title">{props.nameRU}</h2>
                 <button className="moviescard__like-button" type="button" onClick={handleSave}>
-                    <img className="moviescard__like-image" 
-                    src={saveButton ? likeButtonActive : likeButton} 
-                    onClick={() => setSaveButton(!saveButton)} alt="Поставить лайк" />
+                    <img className="moviescard__like-image"
+                        src={movieLikeButtonSRC}
+                        alt="Поставить лайк" />
                 </button>
 
                 {/* кнопка удаления */}
@@ -45,7 +50,7 @@ function MoviesCard(props) {
                 </button> */}
             </div>
             <p className="moviescard__time">
-            {durationMovie(props.duration)}
+                {durationMovie(props.duration)}
             </p>
         </li>
     )

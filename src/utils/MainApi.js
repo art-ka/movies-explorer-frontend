@@ -55,7 +55,7 @@ class Api {
     }
 
     deleteMovie(id) {
-        return fetch(`${this.baseUrl}/movies${id}`, {
+        return fetch(`${this.baseUrl}/movies/${id}`, {
             method: "DELETE",
             headers: this.headers
         })
