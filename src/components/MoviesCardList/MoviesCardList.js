@@ -5,9 +5,6 @@ import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
 
-    const foundClassName = (`movieslist__not-found ${!props.isLoadSearch ? 'movieslist__not-found-hidden' : 
-    'movieslist__not-found' }`);
-
     function handleMoreBtn() {
         setMoviesList(moviesList + moreMovies);
     }
@@ -33,6 +30,15 @@ function MoviesCardList(props) {
         }
     }, [width]);
 
+    console.log(moviesList)
+    console.log(props.movies.length)
+
+    const foundClassName = (`movieslist__not-found ${!props.isLoadSearch ? 
+        'movieslist__not-found-hidden' : 'movieslist__not-found' }`);
+
+    const moreBtnClassName = (`movieslist__more ${moviesList >= props.movies.length ? 
+        'movieslist__more-hidden' : 'movieslist__more' }`);
+
     return (
         <section className="movieslist">
             {!props.isLoadSearch ? <Preloader /> : null}
@@ -45,12 +51,9 @@ function MoviesCardList(props) {
                     }) :
                     <span className={foundClassName}>Ничего не найдено</span>
                 }
-                {/* {props.movies.map(movie => (<MoviesCard {...movie}
-                    onSaveMovie={props.onSaveMovie}
-                    onDeleteMovie={props.onDeleteMovie} key={movie.id} />))} */}
             </ul>
             {!props.isLoadSearch || props.movies.length === 0 ? null :
-                <button className="movieslist__more" onClick={handleMoreBtn}>Ещё</button>}
+                <button className={moreBtnClassName} onClick={handleMoreBtn}>Ещё</button>}
         </section>
     )
 }

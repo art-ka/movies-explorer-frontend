@@ -12,6 +12,7 @@
     padding-left: 0;
     margin: auto;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .movieslist__more {
@@ -45,6 +46,10 @@
 }
 
 .movieslist__not-found-hidden {
+    display: none;
+}
+
+.movieslist__more-hidden {
     display: none;
 }
 
