@@ -39,7 +39,8 @@ function MoviesCardList(props) {
                     // onChange={searchLoad} 
                     />))}
             </ul>
-            <button className="movieslist__more" onClick={handleMoreBtn}>Ещё</button>
+            {!props.isLoadSearch ? null :
+            <button className="movieslist__more" onClick={handleMoreBtn}>Ещё</button>}
         </section>
     )
 }

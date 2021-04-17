@@ -21,7 +21,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState("");
   const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
-  const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
+  // const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isMovieShort, setIsMovieShort] = React.useState(false);
   const [saveMovie, setSaveMovie] = React.useState([]);
@@ -190,7 +190,7 @@ function App() {
                 message={message}
                 ontoggleCheckbox={toggleCheckbox}
                 movieShort={isMovieShort}
-                preloaderIsActive={preloaderIsActive}
+                // preloaderIsActive={preloaderIsActive}
                 onSaveMovie={handleSaveMovie}
                 saveMovie={saveMovie}
                 onDeleteMovie={handleDeleteMovie}
