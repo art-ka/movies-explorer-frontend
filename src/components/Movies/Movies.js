@@ -1,7 +1,6 @@
 import React from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
-// import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -15,11 +14,13 @@ function Movies(props) {
         movieShort={props.movieShort} 
         onsearchMovie={props.onsearchMovie} 
         />
-        {/* <Preloader />  */}
         <MoviesCardList movies={props.movies} 
         message={props.message} 
         onSaveMovie={props.onSaveMovie} 
-        onDeleteMovie={props.onDeleteMovie} />
+        onDeleteMovie={props.onDeleteMovie}
+        isLoadSearch={props.isLoadSearch}
+        togglePreloader={props.togglePreloader}
+        />
         <Footer />
         </>
     )

@@ -25,8 +25,9 @@ function App() {
   const [movies, setMovies] = React.useState([]);
   const [isMovieShort, setIsMovieShort] = React.useState(false);
   const [saveMovie, setSaveMovie] = React.useState([]);
-  // const [foundMovies, setFoundMovies] = React.useState([]);
   const [message, setMessage] = React.useState('');
+
+  const [isLoadSearch, setIsLoadSearch] = React.useState(false);
 
   const history = useHistory();
 
@@ -61,15 +62,17 @@ function App() {
     ApiMovies.getMovies()
       .then((data) => {
         Api.getMovies().then(savedData => {
+          setIsLoadSearch(false);
           data.forEach(movie => {
             const savedMovie = savedData.find(savedMovie => movie.nameRU === savedMovie.nameRU);
-            if(savedMovie) {
+            if (savedMovie) {
               console.log(`Saved movie: ${movie.nameRU}`);
               movie.isSaved = true;
               movie._id = savedMovie._id;
             }
           });
           setMovies(data);
+          setIsLoadSearch(true);
         });
       })
       .catch((err) => {
@@ -130,10 +133,10 @@ function App() {
   function handleDeleteMovie(movie) {
     console.log(movie)
     Api.deleteMovie(movie._id)
-    .then()
-    .catch((err) => {
-      console.log(err);
-    })
+      .then()
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function searchMovie(search) {
@@ -154,15 +157,12 @@ function App() {
     }
   }
 
-  function Preloader() {
-    setPreloaderIsActive(true);
-    setTimeout(async () => {
-      setPreloaderIsActive(false);
-    }, 200);
-  }
-
   function toggleCheckbox() {
     setIsMovieShort(!isMovieShort);
+  }
+
+  function togglePreloader() {
+    setIsLoadSearch(!isLoadSearch);
   }
 
   return (
@@ -186,7 +186,6 @@ function App() {
                 movies={movies}
                 loggedIn={isLoggedIn}
                 component={Movies}
-                onPreloader={Preloader}
                 onsearchMovie={searchMovie}
                 message={message}
                 ontoggleCheckbox={toggleCheckbox}
@@ -195,7 +194,8 @@ function App() {
                 onSaveMovie={handleSaveMovie}
                 saveMovie={saveMovie}
                 onDeleteMovie={handleDeleteMovie}
-              // foundMovies={foundMovies} 
+                isLoadSearch={isLoadSearch}
+                togglePreloader={togglePreloader}
               />
               <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}
                 component={SavedMovies} />
