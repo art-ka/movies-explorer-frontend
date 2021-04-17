@@ -30,16 +30,35 @@ function MoviesCardList(props) {
         }
     }, [width]);
 
-    console.log(moviesList)
-    console.log(props.movies.length)
-
     const foundClassName = (`movieslist__not-found ${!props.isLoadSearch ? 
         'movieslist__not-found-hidden' : 'movieslist__not-found' }`);
 
     const moreBtnClassName = (`movieslist__more ${moviesList >= props.movies.length ? 
         'movieslist__more-hidden' : 'movieslist__more' }`);
 
+    const saveMoviePath = (props.currentPath === "/saved-movies");
+
+    console.log(props.SaveMovie)
+
     return (
+        <>
+        {saveMoviePath ? 
+            <section className="movieslist">
+            {!props.isLoadSearch ? <Preloader /> : null}
+            <ul className="movieslist__card" >
+                {props.saveMovie && props.saveMovie.length > 0 ?
+                    props.saveMovie.slice(0, moviesList).map((saveMovie) => {
+                        return <MoviesCard {...saveMovie}
+                            onSaveMovie={props.onSaveMovie}
+                            onDeleteMovie={props.onDeleteMovie} key={saveMovie.id} />
+                    }) :
+                    <span className={foundClassName}>Ничего не найдено</span>
+                }
+            </ul>
+            {!props.isLoadSearch || props.movies.length === 0 ? null :
+                <button className={moreBtnClassName} onClick={handleMoreBtn}>Ещё</button>}
+        </section> 
+        :
         <section className="movieslist">
             {!props.isLoadSearch ? <Preloader /> : null}
             <ul className="movieslist__card" >
@@ -55,6 +74,8 @@ function MoviesCardList(props) {
             {!props.isLoadSearch || props.movies.length === 0 ? null :
                 <button className={moreBtnClassName} onClick={handleMoreBtn}>Ещё</button>}
         </section>
+        }
+        </>
     )
 }
 

@@ -8,6 +8,7 @@ class Api {
 
     getMovies() {
         return fetch(`${this.baseUrl}/movies`, {
+            method: "GET",
             headers: this.headers
         })
         .then(checkResponse);

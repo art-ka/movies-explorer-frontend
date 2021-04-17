@@ -1,6 +1,6 @@
 import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -21,7 +21,6 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState("");
   const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
-  // const [preloaderIsActive, setPreloaderIsActive] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isMovieShort, setIsMovieShort] = React.useState(false);
   const [saveMovie, setSaveMovie] = React.useState([]);
@@ -29,6 +28,7 @@ function App() {
   const [isLoadSearch, setIsLoadSearch] = React.useState(false);
 
   const history = useHistory();
+  const location = useLocation();
 
   React.useEffect(() => {
     if (!isLoggedIn) {
@@ -79,6 +79,21 @@ function App() {
       })
   }, [isLoggedIn]);
 
+  React.useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+
+    Api.getMovies()
+      .then((data) => {
+        setSaveMovie(data);
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [isLoggedIn]);
+
   function handleLogin(email, password) {
     return Api.authorize(email, password)
       .then((res) => {
@@ -116,8 +131,6 @@ function App() {
         console.log(err);
       });
   }
-
-  //фильмы
 
   function handleSaveMovie(dataMovie) {
     Api.saveMovie(dataMovie)
@@ -191,15 +204,25 @@ function App() {
                 onsearchMovie={searchMovie}
                 ontoggleCheckbox={toggleCheckbox}
                 movieShort={isMovieShort}
-                // preloaderIsActive={preloaderIsActive}
                 onSaveMovie={handleSaveMovie}
                 saveMovie={saveMovie}
                 onDeleteMovie={handleDeleteMovie}
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
               />
-              <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn}
-                component={SavedMovies} />
+              <ProtectedRoute path='/saved-movies' 
+                movies={movies}
+                loggedIn={isLoggedIn}
+                onsearchMovie={searchMovie}
+                ontoggleCheckbox={toggleCheckbox}
+                movieShort={isMovieShort}
+                onSaveMovie={handleSaveMovie}
+                saveMovie={saveMovie}
+                onDeleteMovie={handleDeleteMovie}
+                isLoadSearch={isLoadSearch}
+                togglePreloader={togglePreloader}
+                component={SavedMovies} 
+                currentPath={location.pathname} />
               <ProtectedRoute path='/profile' loggedIn={isLoggedIn}
                 component={Profile}
                 onUpdateUser={handleUpdateUser}

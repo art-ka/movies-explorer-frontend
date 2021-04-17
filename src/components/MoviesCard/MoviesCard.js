@@ -31,10 +31,15 @@ function MoviesCard(props) {
         
     }
 
+    let imageSource = props.image && `https://api.nomoreparties.co${props.image.url}`;
+    if(typeof props.image === 'string') {
+        imageSource = props.image;
+    }
+
     return (
 
         <li className="moviescard">
-            <img className="moviescard__image" src={props.image && `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} />
+            <img className="moviescard__image" src={imageSource} alt={props.nameRU} />
             <div className="moviescard__info">
                 <h2 className="moviescard__title">{props.nameRU}</h2>
                 <button className="moviescard__like-button" type="button" onClick={handleSave}>
