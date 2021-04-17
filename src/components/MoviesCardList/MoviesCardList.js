@@ -27,7 +27,7 @@ function MoviesCardList(props) {
             setMoviesList(8);
             setMoreMovies(2);
         }
-        if ((width === 320) && (width <= 480)) {
+        if ((width => 320) && (width <= 480)) {
             setMoviesList(5);
             setMoreMovies(2);
         }
