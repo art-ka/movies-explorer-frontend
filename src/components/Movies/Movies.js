@@ -9,12 +9,14 @@ function Movies(props) {
     return (
         <>
         <Header loggedIn={props.loggedIn} />
-        <SearchForm onPreloader={props.onPreloader} 
+        <SearchForm 
+        togglePreloader={props.togglePreloader}
         ontoggleCheckbox={props.ontoggleCheckbox} 
         movieShort={props.movieShort} 
         onsearchMovie={props.onsearchMovie} 
         />
-        <MoviesCardList movies={props.movies} 
+        <MoviesCardList 
+        movies={props.movies} 
         message={props.message} 
         onSaveMovie={props.onSaveMovie} 
         onDeleteMovie={props.onDeleteMovie}

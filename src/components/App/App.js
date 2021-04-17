@@ -25,7 +25,6 @@ function App() {
   const [movies, setMovies] = React.useState([]);
   const [isMovieShort, setIsMovieShort] = React.useState(false);
   const [saveMovie, setSaveMovie] = React.useState([]);
-  const [message, setMessage] = React.useState('');
 
   const [isLoadSearch, setIsLoadSearch] = React.useState(false);
 
@@ -140,6 +139,7 @@ function App() {
   }
 
   function searchMovie(search) {
+    setIsLoadSearch(false);
     if (isMovieShort) {
       const shortMovie = movies.filter((movie) => {
         return (
@@ -148,11 +148,13 @@ function App() {
         );
       });
       setMovies(shortMovie);
-      setMessage('');
+      setIsLoadSearch(true);
     } else {
+      setIsLoadSearch(false);
       const movie = movies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(search.toLowerCase());
       });
+      setIsLoadSearch(true);
       return setMovies(movie);
     }
   }
@@ -187,7 +189,6 @@ function App() {
                 loggedIn={isLoggedIn}
                 component={Movies}
                 onsearchMovie={searchMovie}
-                message={message}
                 ontoggleCheckbox={toggleCheckbox}
                 movieShort={isMovieShort}
                 // preloaderIsActive={preloaderIsActive}

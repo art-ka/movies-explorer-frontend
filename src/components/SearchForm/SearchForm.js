@@ -18,7 +18,6 @@ function SearchForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
         console.log("submit");
-        props.onPreloader();
         props.onsearchMovie(searchTerm);
         console.log(searchTerm);
     }
