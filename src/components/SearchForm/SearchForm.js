@@ -54,7 +54,7 @@ function SearchForm(props) {
                 </button>
                 <span id="searchform-input-error" className="searchform__input-error">{errors.text}</span>
             </form>
-            <FilterCheckbox ontoggleCheckbox={props.ontoggleCheckbox} movieShort={props.movieShort} />
+            <FilterCheckbox ontoggleCheckbox={props.ontoggleCheckbox} />
         </section>
     )
 }

@@ -11,8 +11,7 @@ function Movies(props) {
         <Header loggedIn={props.loggedIn} />
         <SearchForm 
         togglePreloader={props.togglePreloader}
-        ontoggleCheckbox={props.ontoggleCheckbox} 
-        movieShort={props.movieShort} 
+        ontoggleCheckbox={props.ontoggleCheckbox}
         onsearchMovie={props.onsearchMovie} 
         />
         <MoviesCardList 

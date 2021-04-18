@@ -22,13 +22,22 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState("");
   const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
   const [movies, setMovies] = React.useState([]);
-  const [isMovieShort, setIsMovieShort] = React.useState(false);
-  const [saveMovie, setSaveMovie] = React.useState([]);
+  const [isCheckboxChecked, setIsCheckboxChecked] = React.useState(false);
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [searchText, setSearchText] = React.useState("");
 
-  const [isLoadSearch, setIsLoadSearch] = React.useState(false);
+  const [isLoadSearch, setIsPreloaderInactive] = React.useState(false);
 
   const history = useHistory();
   const location = useLocation();
+
+  React.useEffect(() => {
+    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${searchText}`);
+  
+    searchMovie(searchText);
+    searchInSaveMovie(searchText);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCheckboxChecked])
 
   React.useEffect(() => {
     if (!isLoggedIn) {
@@ -57,9 +66,8 @@ function App() {
   function fetchMovies() {
     ApiMovies.getMovies()
       .then((data) => {
-        // localStorage.setItem("data", JSON.stringify(data));
         Api.getMovies().then(savedData => {
-          setIsLoadSearch(false);
+          setIsPreloaderInactive(false);
           data.forEach(movie => {
             const savedMovie = savedData.find(savedMovie => movie.id === savedMovie.movieId);
             if (savedMovie) {
@@ -68,9 +76,11 @@ function App() {
               movie._id = savedMovie._id;
             }
           });
-          // setMovies(JSON.parse(localStorage.getItem("data")));
+          localStorage.setItem("movies", JSON.stringify(data));
+          localStorage.setItem("savedMovies", JSON.stringify(savedData));
           setMovies(data);
-          setIsLoadSearch(true);
+          setSavedMovies(savedData);
+          setIsPreloaderInactive(true);
         });
       })
       .catch((err) => {
@@ -84,21 +94,6 @@ function App() {
     }
 
     fetchMovies();
-  }, [isLoggedIn]);
-
-  React.useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
-
-    Api.getMovies()
-      .then((data) => {
-        setSaveMovie(data);
-        console.log(data)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
   }, [isLoggedIn]);
 
   function handleLogin(email, password) {
@@ -142,8 +137,17 @@ function App() {
   function handleSaveMovie(dataMovie) {
     Api.saveMovie(dataMovie)
       .then((newMovie) => {
-        setMovies(movies.map(m => m.id === newMovie.movieId ? { ...m, _id: newMovie._id, isSaved: true } : m))
-        setSaveMovie([newMovie, ...saveMovie]);
+        const newMovies = movies.map(m => m.id === newMovie.movieId ? { ...m, _id: newMovie._id, isSaved: true } : m);
+        setMovies(newMovies);
+
+        const newStoredMovies = JSON.parse(localStorage.getItem("movies")).map(m => m.id === newMovie.movieId ? { ...m, _id: newMovie._id, isSaved: true } : m);
+        localStorage.setItem("movies", JSON.stringify(newStoredMovies));
+
+        const newSavedMovies = [newMovie, ...savedMovies];
+        setSavedMovies(newSavedMovies);
+
+        const newStoredSavedMovies =  [newMovie, ...JSON.parse(localStorage.getItem("savedMovies"))];
+        localStorage.setItem("savedMovies", JSON.stringify(newStoredSavedMovies));
       })
       .catch((err) => {
         console.log(err);
@@ -154,9 +158,17 @@ function App() {
     console.log(movie)
     Api.deleteMovie(movie._id)
       .then(() => {
-        setMovies(movies.map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m));
-        setSaveMovie(saveMovie.filter((c) =>
-          c._id !== movie._id));
+        const newMovies = movies.map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m);
+        setMovies(newMovies);
+
+        // TODO
+        localStorage.setItem("movies", JSON.stringify(newMovies));
+
+        const newSavedMovies = savedMovies.filter(c => c._id !== movie._id)
+        setSavedMovies(newSavedMovies);
+
+        // TODO
+        localStorage.setItem("savedMovies", JSON.stringify(newSavedMovies));
       })
       .catch((err) => {
         console.log(err);
@@ -164,53 +176,40 @@ function App() {
   }
 
   function searchMovie(search) {
-    setIsLoadSearch(false);
-    if (isMovieShort) {
-      const shortMovie = movies.filter((movie) => {
-        return (
-          movie.duration <= 40 &&
-          movie.nameRU.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-      setMovies(shortMovie);
-      setIsLoadSearch(true);
-    } else {
-      setIsLoadSearch(false);
-      const movie = movies.filter((movie) => {
-        return movie.nameRU.toLowerCase().includes(search.toLowerCase());
-      });
-      setIsLoadSearch(true);
-      return setMovies(movie);
-    }
+    searchMovieCallback(search, 'movies', setMovies)
   }
 
   function searchInSaveMovie(search) {
-    setIsLoadSearch(false);
-    if (isMovieShort) {
-      const shortMovie = saveMovie.filter((movie) => {
+    searchMovieCallback(search, 'savedMovies', setSavedMovies)
+  }
+
+  function searchMovieCallback(search, movies, callback) {
+    setSearchText(search);
+    setIsPreloaderInactive(false);
+    const preservedMovies = JSON.parse(localStorage.getItem(movies));
+    if (isCheckboxChecked) {
+      const shortMovie = preservedMovies.filter((movie) => {
         return (
           movie.duration <= 40 &&
           movie.nameRU.toLowerCase().includes(search.toLowerCase())
         );
       });
-      setSaveMovie(shortMovie);
-      setIsLoadSearch(true);
+      callback(shortMovie);
     } else {
-      setIsLoadSearch(false);
-      const movie = saveMovie.filter((movie) => {
+      const movie = preservedMovies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(search.toLowerCase());
       });
-      setIsLoadSearch(true);
-      return setSaveMovie(movie);
+      callback(movie);
     }
+    setIsPreloaderInactive(true);
   }
 
   function toggleCheckbox() {
-    setIsMovieShort(!isMovieShort);
+    setIsCheckboxChecked(!isCheckboxChecked);
   }
 
   function togglePreloader() {
-    setIsLoadSearch(!isLoadSearch);
+    setIsPreloaderInactive(!isLoadSearch);
   }
 
   return (
@@ -236,9 +235,8 @@ function App() {
                 component={Movies}
                 onsearchMovie={searchMovie}
                 ontoggleCheckbox={toggleCheckbox}
-                movieShort={isMovieShort}
                 onSaveMovie={handleSaveMovie}
-                saveMovie={saveMovie}
+                saveMovie={savedMovies}
                 onDeleteMovie={handleDeleteMovie}
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
@@ -248,9 +246,8 @@ function App() {
                 loggedIn={isLoggedIn}
                 onsearchMovie={searchMovie}
                 ontoggleCheckbox={toggleCheckbox}
-                movieShort={isMovieShort}
                 onSaveMovie={handleSaveMovie}
-                saveMovie={saveMovie}
+                saveMovie={savedMovies}
                 onDeleteMovie={handleDeleteMovie}
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
