@@ -61,7 +61,7 @@ function App() {
         Api.getMovies().then(savedData => {
           setIsLoadSearch(false);
           data.forEach(movie => {
-            const savedMovie = savedData.find(savedMovie => movie.nameRU === savedMovie.nameRU);
+            const savedMovie = savedData.find(savedMovie => movie.id === savedMovie.movieId);
             if (savedMovie) {
               console.log(`Saved movie: ${movie.nameRU}`);
               movie.isSaved = true;
@@ -142,8 +142,8 @@ function App() {
   function handleSaveMovie(dataMovie) {
     Api.saveMovie(dataMovie)
       .then((newMovie) => {
-        setSaveMovie([newMovie, { ...saveMovie, _id: newMovie.id }]);
-        setSaveMovie(saveMovie);
+        setMovies(movies.map(m => m.id === newMovie.movieId ? { ...m, _id: newMovie._id, isSaved: true } : m))
+        setSaveMovie([newMovie, ...saveMovie]);
       })
       .catch((err) => {
         console.log(err);
@@ -154,8 +154,7 @@ function App() {
     console.log(movie)
     Api.deleteMovie(movie._id)
       .then(() => {
-        setMovies(movies.filter((c) =>
-          c._id !== movie._id));
+        setMovies(movies.map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m));
         setSaveMovie(saveMovie.filter((c) =>
           c._id !== movie._id));
       })

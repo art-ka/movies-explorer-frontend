@@ -5,7 +5,6 @@ import likeButtonActive from '../../images/save2.svg';
 import del from '../../images/delete.svg';
 
 function MoviesCard(props) {
-    const [visible, setVisible] = useState(true);
     const [isSaved, setIsSaved] = useState(props.isSaved);
 
     const movieLikeButtonSRC = isSaved ? likeButtonActive : likeButton;
@@ -33,7 +32,6 @@ function MoviesCard(props) {
         console.log(`Remove movie: ${props.nameRU}`);
         props.onDeleteMovie(props);
         setIsSaved(false);
-        setVisible(false);
     }
 
     let imageSource = props.image && `https://api.nomoreparties.co${props.image.url}`;
@@ -41,7 +39,7 @@ function MoviesCard(props) {
         imageSource = props.image;
     }
 
-    return !visible ? null : (
+    return (
         <li className="moviescard" id={props._id}>
             <a href={props.trailerLink || props.trailer} className="moviescard__link" target="_blank" rel="noreferrer">
                 <img className="moviescard__image" src={imageSource} alt={props.nameRU} />
