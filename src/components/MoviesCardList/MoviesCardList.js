@@ -49,7 +49,8 @@ function MoviesCardList(props) {
                             onSaveMovie={props.onSaveMovie}
                             onDeleteMovie={props.onDeleteMovie}
                             saveMoviePath={saveMoviePath} 
-                            handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} key={saveMovie.id || saveMovie._id} />
+                            handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} 
+                            key={saveMovie._id} />
                     }) :
                     <span className={foundClassName}>Ничего не найдено</span>
                 }

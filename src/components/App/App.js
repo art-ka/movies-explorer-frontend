@@ -54,12 +54,10 @@ function App() {
       })
   }
 
-  React.useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
+  function fetchMovies() {
     ApiMovies.getMovies()
       .then((data) => {
+        // localStorage.setItem("data", JSON.stringify(data));
         Api.getMovies().then(savedData => {
           setIsLoadSearch(false);
           data.forEach(movie => {
@@ -70,6 +68,7 @@ function App() {
               movie._id = savedMovie._id;
             }
           });
+          // setMovies(JSON.parse(localStorage.getItem("data")));
           setMovies(data);
           setIsLoadSearch(true);
         });
@@ -77,6 +76,14 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  React.useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+
+    fetchMovies();
   }, [isLoggedIn]);
 
   React.useEffect(() => {
@@ -135,7 +142,8 @@ function App() {
   function handleSaveMovie(dataMovie) {
     Api.saveMovie(dataMovie)
       .then((newMovie) => {
-        setSaveMovie([newMovie, ...saveMovie]);
+        setSaveMovie([newMovie, { ...saveMovie, _id: newMovie.id }]);
+        setSaveMovie(saveMovie);
       })
       .catch((err) => {
         console.log(err);
@@ -145,34 +153,16 @@ function App() {
   function handleDeleteMovie(movie) {
     console.log(movie)
     Api.deleteMovie(movie._id)
-      .then()
+      .then(() => {
+        setMovies(movies.filter((c) =>
+          c._id !== movie._id));
+        setSaveMovie(saveMovie.filter((c) =>
+          c._id !== movie._id));
+      })
       .catch((err) => {
         console.log(err);
       })
   }
-
-  // function handleDeleteMovieSavePage(movie) {
-  //   console.log(movie)
-  //   Api.deleteMovie(movie._id)
-  //     .then(() => {
-  //       // const savedMovie = saveMovie.find((item) => item._id === movie._id);
-  //       const newMovie = saveMovie.filter((c) => c._id !== movie._id);
-  //       setSaveMovie(newMovie);
-  //     })
-  //     .catch(err => console.log(err))
-  // }
-
-    // Api.deleteMovie(movie._id)
-    //   .then((delMovie) => {
-    //     setSaveMovie(saveMovie.filter((c) =>
-    //         c._id !== delMovie._id));
-    //     setMovies(movies.map((movie) => movie.id === movie._id ? 
-    //     movies.find((m) => m.id === movie.id) : movie))
-    // })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
-
 
   function searchMovie(search) {
     setIsLoadSearch(false);
@@ -254,7 +244,7 @@ function App() {
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
               />
-              <ProtectedRoute path='/saved-movies' 
+              <ProtectedRoute path='/saved-movies'
                 movies={movies}
                 loggedIn={isLoggedIn}
                 onsearchMovie={searchMovie}
@@ -265,11 +255,10 @@ function App() {
                 onDeleteMovie={handleDeleteMovie}
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
-                component={SavedMovies} 
-                currentPath={location.pathname} 
+                component={SavedMovies}
+                currentPath={location.pathname}
                 searchInSaveMovie={searchInSaveMovie}
-                // handleDeleteMovieSavePage={handleDeleteMovieSavePage} 
-                />
+              />
               <ProtectedRoute path='/profile' loggedIn={isLoggedIn}
                 component={Profile}
                 onUpdateUser={handleUpdateUser}
