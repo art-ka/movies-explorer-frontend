@@ -47,9 +47,9 @@ function MoviesCardList(props) {
                     props.saveMovie.slice(0, moviesList).map((saveMovie) => {
                         return <MoviesCard {...saveMovie}
                             onSaveMovie={props.onSaveMovie}
-                            onDeleteMovie={props.onDeleteMovie} key={saveMovie.id} 
+                            onDeleteMovie={props.onDeleteMovie}
                             saveMoviePath={saveMoviePath} 
-                            handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} />
+                            handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} key={saveMovie.id || saveMovie._id} />
                     }) :
                     <span className={foundClassName}>Ничего не найдено</span>
                 }

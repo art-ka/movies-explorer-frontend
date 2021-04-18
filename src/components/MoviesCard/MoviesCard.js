@@ -40,7 +40,6 @@ function MoviesCard(props) {
     }
 
     return (
-
         <li className="moviescard">
             <img className="moviescard__image" src={imageSource} alt={props.nameRU} />
             <div className="moviescard__info">
