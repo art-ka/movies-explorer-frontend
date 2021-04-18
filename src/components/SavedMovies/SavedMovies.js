@@ -14,7 +14,9 @@ function SavedMovies(props) {
         togglePreloader={props.togglePreloader}
         ontoggleCheckbox={props.ontoggleCheckbox} 
         movieShort={props.movieShort} 
-        onsearchMovie={props.onsearchMovie} />
+        onsearchMovie={props.onsearchMovie} 
+        searchInSaveMovie={props.searchInSaveMovie} 
+        currentPath={props.currentPath} />
         <MoviesCardList 
         movies={props.movies} 
         message={props.message} 
@@ -23,7 +25,9 @@ function SavedMovies(props) {
         onDeleteMovie={props.onDeleteMovie}
         isLoadSearch={props.isLoadSearch}
         togglePreloader={props.togglePreloader} 
-        currentPath={props.currentPath} />
+        currentPath={props.currentPath} 
+        // handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} 
+        />
         <Footer />
         </>
     )

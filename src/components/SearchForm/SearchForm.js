@@ -8,6 +8,7 @@ function SearchForm(props) {
 
     const [searchTerm, setSearchTerm] = React.useState("");
     const [errors, setErrors] = React.useState({});
+    const saveMoviePath = (props.currentPath === "/saved-movies");
 
     const handleChange = event => {
         const name = event.target.name;
@@ -18,8 +19,13 @@ function SearchForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
         console.log("submit");
+        if(saveMoviePath) {
+            props.searchInSaveMovie(searchTerm);
+            console.log(`Поиск среди сохраненных фильмов по запросу: ${searchTerm}`);
+        } else {
         props.onsearchMovie(searchTerm);
-        console.log(searchTerm);
+        console.log(`Поиск среди всех фильмов по запросу: ${searchTerm}`);
+    }
     }
 
     function handleEnterKeyPressed(e) {

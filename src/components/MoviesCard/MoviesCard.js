@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import './MoviesCard.css';
 import likeButton from '../../images/save1d.svg';
 import likeButtonActive from '../../images/save2.svg';
-// import movie from '../../images/movie.png';
-// import del from '../../images/delete.svg';
+import del from '../../images/delete.svg';
 
 function MoviesCard(props) {
 
-    // const [saveButton, setSaveButton] = useState(false);
     const [isSaved, setIsSaved] = useState(props.isSaved);
 
     const movieLikeButtonSRC = isSaved ? likeButtonActive : likeButton;
@@ -28,11 +26,16 @@ function MoviesCard(props) {
             props.onSaveMovie(props);
         }
         setIsSaved(!isSaved);
-        
     }
 
+    // function handleDeleteSave(e) {
+    //     e.preventDefault();
+    //     props.handleDeleteMovieSavePage(props);
+    //     setIsSaved(true);
+    // }
+
     let imageSource = props.image && `https://api.nomoreparties.co${props.image.url}`;
-    if(typeof props.image === 'string') {
+    if (typeof props.image === 'string') {
         imageSource = props.image;
     }
 
@@ -42,17 +45,20 @@ function MoviesCard(props) {
             <img className="moviescard__image" src={imageSource} alt={props.nameRU} />
             <div className="moviescard__info">
                 <h2 className="moviescard__title">{props.nameRU}</h2>
-                <button className="moviescard__like-button" type="button" onClick={handleSave}>
-                    <img className="moviescard__like-image"
-                        src={movieLikeButtonSRC}
-                        alt="Поставить лайк" />
-                </button>
 
-                {/* кнопка удаления */}
-
-                {/* <button className="moviescard__delete-button moviescard__delete-button_hidden" type="button" >
-                    <img className="moviescard__delete-image" src={del} alt="Удалить из сохраненных" />
-                </button> */}
+                {props.saveMoviePath ?
+                    <button className="moviescard__delete-button" type="button" 
+                    // onClick={handleDeleteSave}
+                    >
+                        <img className="moviescard__delete-image" src={del} alt="Удалить из сохраненных" />
+                    </button> 
+                    :
+                    <button className="moviescard__like-button" type="button" onClick={handleSave}>
+                        <img className="moviescard__like-image"
+                            src={movieLikeButtonSRC}
+                            alt="Поставить лайк" />
+                    </button>
+                }
             </div>
             <p className="moviescard__time">
                 {durationMovie(props.duration)}

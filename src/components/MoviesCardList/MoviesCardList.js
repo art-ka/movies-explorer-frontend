@@ -10,7 +10,6 @@ function MoviesCardList(props) {
     }
 
     let width = window.innerWidth;
-    console.log(width)
 
     const [moviesList, setMoviesList] = React.useState(0);
     const [moreMovies, setMoreMovies] = React.useState(0);
@@ -38,8 +37,6 @@ function MoviesCardList(props) {
 
     const saveMoviePath = (props.currentPath === "/saved-movies");
 
-    console.log(props.SaveMovie)
-
     return (
         <>
         {saveMoviePath ? 
@@ -50,13 +47,13 @@ function MoviesCardList(props) {
                     props.saveMovie.slice(0, moviesList).map((saveMovie) => {
                         return <MoviesCard {...saveMovie}
                             onSaveMovie={props.onSaveMovie}
-                            onDeleteMovie={props.onDeleteMovie} key={saveMovie.id} />
+                            onDeleteMovie={props.onDeleteMovie} key={saveMovie.id} 
+                            saveMoviePath={saveMoviePath} 
+                            handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} />
                     }) :
                     <span className={foundClassName}>Ничего не найдено</span>
                 }
             </ul>
-            {!props.isLoadSearch || props.movies.length === 0 ? null :
-                <button className={moreBtnClassName} onClick={handleMoreBtn}>Ещё</button>}
         </section> 
         :
         <section className="movieslist">

@@ -151,6 +151,29 @@ function App() {
       })
   }
 
+  // function handleDeleteMovieSavePage(movie) {
+  //   console.log(movie)
+  //   Api.deleteMovie(movie._id)
+  //     .then(() => {
+  //       // const savedMovie = saveMovie.find((item) => item._id === movie._id);
+  //       const newMovie = saveMovie.filter((c) => c._id !== movie._id);
+  //       setSaveMovie(newMovie);
+  //     })
+  //     .catch(err => console.log(err))
+  // }
+
+    // Api.deleteMovie(movie._id)
+    //   .then((delMovie) => {
+    //     setSaveMovie(saveMovie.filter((c) =>
+    //         c._id !== delMovie._id));
+    //     setMovies(movies.map((movie) => movie.id === movie._id ? 
+    //     movies.find((m) => m.id === movie.id) : movie))
+    // })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
+
+
   function searchMovie(search) {
     setIsLoadSearch(false);
     if (isMovieShort) {
@@ -169,6 +192,27 @@ function App() {
       });
       setIsLoadSearch(true);
       return setMovies(movie);
+    }
+  }
+
+  function searchInSaveMovie(search) {
+    setIsLoadSearch(false);
+    if (isMovieShort) {
+      const shortMovie = saveMovie.filter((movie) => {
+        return (
+          movie.duration <= 40 &&
+          movie.nameRU.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setSaveMovie(shortMovie);
+      setIsLoadSearch(true);
+    } else {
+      setIsLoadSearch(false);
+      const movie = saveMovie.filter((movie) => {
+        return movie.nameRU.toLowerCase().includes(search.toLowerCase());
+      });
+      setIsLoadSearch(true);
+      return setSaveMovie(movie);
     }
   }
 
@@ -222,7 +266,10 @@ function App() {
                 isLoadSearch={isLoadSearch}
                 togglePreloader={togglePreloader}
                 component={SavedMovies} 
-                currentPath={location.pathname} />
+                currentPath={location.pathname} 
+                searchInSaveMovie={searchInSaveMovie}
+                // handleDeleteMovieSavePage={handleDeleteMovieSavePage} 
+                />
               <ProtectedRoute path='/profile' loggedIn={isLoggedIn}
                 component={Profile}
                 onUpdateUser={handleUpdateUser}
