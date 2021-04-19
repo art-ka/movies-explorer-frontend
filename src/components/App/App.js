@@ -23,21 +23,22 @@ function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(!!localStorage.getItem("jwt"));
   const [movies, setMovies] = React.useState([]);
   const [isCheckboxChecked, setIsCheckboxChecked] = React.useState(false);
+  const [isCheckboxCheckedonSavePage, setIsCheckboxCheckedonSavePage] = React.useState(false);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [searchText, setSearchText] = React.useState("");
 
-  const [isLoadSearch, setIsPreloaderInactive] = React.useState(false);
+  const [isPreloaderActive, setIsPreloaderActive] = React.useState(false);
 
   const history = useHistory();
   const location = useLocation();
 
   React.useEffect(() => {
-    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${searchText}`);
+    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${isCheckboxCheckedonSavePage}, ${searchText}`);
   
     searchMovie(searchText);
     searchInSaveMovie(searchText);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCheckboxChecked])
+  }, [isCheckboxChecked, isCheckboxCheckedonSavePage])
 
   React.useEffect(() => {
     if (!isLoggedIn) {
@@ -67,7 +68,7 @@ function App() {
     ApiMovies.getMovies()
       .then((data) => {
         Api.getMovies().then(savedData => {
-          setIsPreloaderInactive(false);
+          setIsPreloaderActive(false);
           data.forEach(movie => {
             const savedMovie = savedData.find(savedMovie => movie.id === savedMovie.movieId);
             if (savedMovie) {
@@ -76,11 +77,11 @@ function App() {
               movie._id = savedMovie._id;
             }
           });
+          setIsPreloaderActive(true);
           localStorage.setItem("movies", JSON.stringify(data));
           localStorage.setItem("savedMovies", JSON.stringify(savedData));
           setMovies(data);
           setSavedMovies(savedData);
-          setIsPreloaderInactive(true);
         });
       })
       .catch((err) => {
@@ -161,14 +162,14 @@ function App() {
         const newMovies = movies.map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m);
         setMovies(newMovies);
 
-        // TODO
-        localStorage.setItem("movies", JSON.stringify(newMovies));
+        const newStoredMovies = JSON.parse(localStorage.getItem("movies")).map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m);
+        localStorage.setItem("movies", JSON.stringify(newStoredMovies));
 
-        const newSavedMovies = savedMovies.filter(c => c._id !== movie._id)
+        const newSavedMovies = savedMovies.filter(c => c._id !== movie._id);
         setSavedMovies(newSavedMovies);
 
-        // TODO
-        localStorage.setItem("savedMovies", JSON.stringify(newSavedMovies));
+        const newStoredSavedMovies = JSON.parse(localStorage.getItem("savedMovies")).filter(c => c._id !== movie._id);
+        localStorage.setItem("savedMovies", JSON.stringify(newStoredSavedMovies));
       })
       .catch((err) => {
         console.log(err);
@@ -176,18 +177,19 @@ function App() {
   }
 
   function searchMovie(search) {
-    searchMovieCallback(search, 'movies', setMovies)
+    searchMovieCallback(search, 'movies', isCheckboxChecked, setMovies);
   }
 
   function searchInSaveMovie(search) {
-    searchMovieCallback(search, 'savedMovies', setSavedMovies)
+    searchMovieCallback(search, 'savedMovies', isCheckboxCheckedonSavePage, setSavedMovies);
   }
 
-  function searchMovieCallback(search, movies, callback) {
+  function searchMovieCallback(search, movies, isChecked, callback) {
     setSearchText(search);
-    setIsPreloaderInactive(false);
+    setIsPreloaderActive(false);
     const preservedMovies = JSON.parse(localStorage.getItem(movies));
-    if (isCheckboxChecked) {
+    if (isChecked) {
+      console.log(isChecked)
       const shortMovie = preservedMovies.filter((movie) => {
         return (
           movie.duration <= 40 &&
@@ -201,7 +203,7 @@ function App() {
       });
       callback(movie);
     }
-    setIsPreloaderInactive(true);
+    setIsPreloaderActive(true);
   }
 
   function toggleCheckbox() {
@@ -209,7 +211,11 @@ function App() {
   }
 
   function togglePreloader() {
-    setIsPreloaderInactive(!isLoadSearch);
+    setIsPreloaderActive(!isPreloaderActive);
+  }
+
+  function toggleCheckboxSave() {
+    setIsCheckboxCheckedonSavePage(!isCheckboxCheckedonSavePage);
   }
 
   return (
@@ -238,18 +244,18 @@ function App() {
                 onSaveMovie={handleSaveMovie}
                 saveMovie={savedMovies}
                 onDeleteMovie={handleDeleteMovie}
-                isLoadSearch={isLoadSearch}
+                isLoadSearch={isPreloaderActive}
                 togglePreloader={togglePreloader}
               />
               <ProtectedRoute path='/saved-movies'
                 movies={movies}
                 loggedIn={isLoggedIn}
                 onsearchMovie={searchMovie}
-                ontoggleCheckbox={toggleCheckbox}
+                toggleCheckboxSave={toggleCheckboxSave}
                 onSaveMovie={handleSaveMovie}
                 saveMovie={savedMovies}
                 onDeleteMovie={handleDeleteMovie}
-                isLoadSearch={isLoadSearch}
+                isLoadSearch={isPreloaderActive}
                 togglePreloader={togglePreloader}
                 component={SavedMovies}
                 currentPath={location.pathname}

@@ -1,60 +1,69 @@
 import React from 'react';
+import useFormWithValidation from '../../utils/useFormWithValidation';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import button from '../../images/find.svg';
 
 
 function SearchForm(props) {
-
-    const [searchTerm, setSearchTerm] = React.useState("");
-    const [errors, setErrors] = React.useState({});
     const saveMoviePath = (props.currentPath === "/saved-movies");
 
-    const handleChange = event => {
-        const name = event.target.name;
-        setSearchTerm(event.target.value);
-        setErrors({ ...errors, [name]: event.target.validationMessage });
-    };
+    const { values, handleChange, errors, isValid } = useFormWithValidation({});
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log("submit");
-        if(saveMoviePath) {
-            props.searchInSaveMovie(searchTerm);
-            console.log(`Поиск среди сохраненных фильмов по запросу: ${searchTerm}`);
+        if (saveMoviePath) {
+            if (isValid) {
+                e.preventDefault();
+                props.searchInSaveMovie(values.search);
+                console.log(`Поиск среди сохраненных фильмов по запросу: ${values.search}`);
+            }
         } else {
-        props.onsearchMovie(searchTerm);
-        console.log(`Поиск среди всех фильмов по запросу: ${searchTerm}`);
-    }
+            if (isValid) {
+                props.onsearchMovie(values.search);
+                console.log(`Поиск среди всех фильмов по запросу: ${values.search}`);
+            }
+        }
     }
 
     function handleEnterKeyPressed(e) {
         if (e.key === "Enter") {
-            props.onsearchMovie(searchTerm);
+            if (saveMoviePath) {
+                if (isValid) {
+                    e.preventDefault();
+                    props.searchInSaveMovie(values.search);
+                }
+            } else {
+                if (isValid) {
+                    e.preventDefault();
+                    props.onsearchMovie(values.search);
+                }
+            }
         }
     }
-
-
 
     return (
         <section className="searchform">
             <form className="searchform__data" onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    name="text"
+                    name="search"
+                    id="search"
                     placeholder="Фильм"
-                    value={searchTerm}
                     onChange={handleChange}
                     onKeyPress={handleEnterKeyPressed}
                     className="searchform__input"
                     required minLength="2" maxLength="30"
                 />
-                <button className="searchform__button" type="submit">
+                <span id="searchform-input-error" className="searchform__input-error">{errors.search}</span>
+                <button className="searchform__button" type="submit" disabled={!isValid} >
                     <img src={button} alt="Кнопка поиска" />
                 </button>
-                <span id="searchform-input-error" className="searchform__input-error">{errors.text}</span>
             </form>
-            <FilterCheckbox ontoggleCheckbox={props.ontoggleCheckbox} />
+            <FilterCheckbox ontoggleCheckbox={props.ontoggleCheckbox}
+                toggleCheckboxSave={props.toggleCheckboxSave}
+                currentPath={props.currentPath} />
         </section>
     )
 }

@@ -12,7 +12,7 @@ function SavedMovies(props) {
         <Header loggedIn={props.loggedIn} />
         <SearchForm 
         togglePreloader={props.togglePreloader}
-        ontoggleCheckbox={props.ontoggleCheckbox} 
+        toggleCheckboxSave={props.toggleCheckboxSave}
         onsearchMovie={props.onsearchMovie} 
         searchInSaveMovie={props.searchInSaveMovie} 
         currentPath={props.currentPath} />
@@ -25,7 +25,6 @@ function SavedMovies(props) {
         isLoadSearch={props.isLoadSearch}
         togglePreloader={props.togglePreloader} 
         currentPath={props.currentPath} 
-        // handleDeleteMovieSavePage={props.handleDeleteMovieSavePage} 
         />
         <Footer />
         </>
