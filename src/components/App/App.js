@@ -33,14 +33,6 @@ function App() {
   const location = useLocation();
 
   React.useEffect(() => {
-    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${isCheckboxCheckedonSavePage}, ${searchText}`);
-  
-    searchMovie(searchText);
-    searchInSaveMovie(searchText);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCheckboxChecked, isCheckboxCheckedonSavePage])
-
-  React.useEffect(() => {
     if (!isLoggedIn) {
       return;
     }
@@ -113,8 +105,20 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Неправильный логин или пароль. Попробуйте еще раз");
       });
   }
+
+  React.useEffect(() => {
+    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${isCheckboxCheckedonSavePage}, ${searchText}`);
+    if ("movies" && (isCheckboxChecked || isCheckboxCheckedonSavePage)) {
+      searchMovie(searchText);
+      searchInSaveMovie(searchText);
+    }
+    searchMovie(searchText);
+      searchInSaveMovie(searchText);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCheckboxChecked, isCheckboxCheckedonSavePage])
 
   function handleLogout() {
     setLoggedIn(false);
@@ -132,6 +136,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
       });
   }
 
@@ -152,6 +157,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
       })
   }
 
@@ -173,6 +179,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
       })
   }
 

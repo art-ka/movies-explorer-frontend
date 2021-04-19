@@ -25,16 +25,17 @@ function Register(props) {
             ...data,
             [name]: value,
         })
-        setErrors({ 
-            ...errors, 
-            [name]: e.target.validationMessage });
-            setIsValid(e.target.closest("form").checkValidity());
+        setErrors({
+            ...errors,
+            [name]: e.target.validationMessage
+        });
+        setIsValid(e.target.closest("form").checkValidity());
     }
 
-    const validBtnClass = (`form__button-container ${!isValid ? 
-        'form__button-container-unvalid' : 'form__button-container' }`);
+    const validBtnClass = (`form__button-container ${!isValid ?
+        'form__button-container-unvalid' : 'form__button-container'}`);
 
-    return ( 
+    return (
         <section className="form">
             <Link to='/'>
                 <img className="form__logo" src={logo} alt="Логотип" />
@@ -46,15 +47,15 @@ function Register(props) {
                 <p className="form__name">Имя</p>
                 <input className="form__field form__field_input_name" id="name" name="name" type="text"
                     required minLength="2" onChange={handleChange} />
-                    <span id="name-error" className="form__field-error">{errors.name}</span>
+                <span id="name-error" className="form__field-error">{errors.name}</span>
                 <p className="form__name">E-mail</p>
                 <input className="form__field form__field_input_email" id="email" name="email" type="email"
                     required onChange={handleChange} />
-                    <span id="email-error" className="form__field-error">{errors.email}</span>
+                <span id="email-error" className="form__field-error">{errors.email}</span>
                 <p className="form__name">Пароль</p>
                 <input className="form__field form__field_input_password" id="password" name="password" type="password"
                     required onChange={handleChange} />
-                    <span id="password-error" className="form__field-error">{errors.password}</span>
+                <span id="password-error" className="form__field-error">{errors.password}</span>
                 <button type="submit" className={validBtnClass} disabled={!isValid}>Зарегистрироваться</button>
             </form>
             <div className="form__signin">
