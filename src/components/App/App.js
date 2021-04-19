@@ -1,6 +1,6 @@
 import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation, Redirect } from 'react-router-dom';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -227,10 +227,18 @@ function App() {
           <div className="main">
             <Switch>
               <Route path='/signup'>
+              {isLoggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
                 <Register onRegister={handleRegister} />
+              )}
               </Route>
               <Route path='/signin'>
+              {isLoggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
                 <Login onLogin={handleLogin} />
+              )}
               </Route>
               <Route exact path='/'>
                 <Main loggedIn={isLoggedIn} />

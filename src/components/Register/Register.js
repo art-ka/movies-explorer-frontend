@@ -29,7 +29,7 @@ function Register(props) {
             [name]: e.target.validationMessage });
     }
 
-    return (
+    return ( 
         <section className="form">
             <Link to='/'>
                 <img className="form__logo" src={logo} alt="Логотип" />
