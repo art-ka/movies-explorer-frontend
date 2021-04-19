@@ -25,7 +25,7 @@ function App() {
   const [isCheckboxChecked, setIsCheckboxChecked] = React.useState(false);
   const [isCheckboxCheckedonSavePage, setIsCheckboxCheckedonSavePage] = React.useState(false);
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [searchText, setSearchText] = React.useState("");
+  // const [searchText, setSearchText] = React.useState("");
 
   const [isPreloaderActive, setIsPreloaderActive] = React.useState(false);
 
@@ -109,16 +109,16 @@ function App() {
       });
   }
 
-  React.useEffect(() => {
-    console.log(`toggleCheckbox: ${isCheckboxChecked}, ${isCheckboxCheckedonSavePage}, ${searchText}`);
-    if ("movies" && (isCheckboxChecked || isCheckboxCheckedonSavePage)) {
-      searchMovie(searchText);
-      searchInSaveMovie(searchText);
-    }
-    searchMovie(searchText);
-      searchInSaveMovie(searchText);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCheckboxChecked, isCheckboxCheckedonSavePage])
+  // React.useEffect(() => {
+  //   console.log(`toggleCheckbox: ${isCheckboxChecked}, ${isCheckboxCheckedonSavePage}, ${searchText}`);
+  //   if ("movies" && (isCheckboxChecked || isCheckboxCheckedonSavePage)) {
+  //     searchMovie(searchText);
+  //     searchInSaveMovie(searchText);
+  //   }
+  //   searchMovie(searchText);
+  //     searchInSaveMovie(searchText);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isCheckboxChecked, isCheckboxCheckedonSavePage])
 
   function handleLogout() {
     setLoggedIn(false);
@@ -192,7 +192,7 @@ function App() {
   }
 
   function searchMovieCallback(search, movies, isChecked, callback) {
-    setSearchText(search);
+    // setSearchText(search);
     setIsPreloaderActive(false);
     const preservedMovies = JSON.parse(localStorage.getItem(movies));
     if (isChecked) {
