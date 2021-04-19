@@ -122,6 +122,8 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     localStorage.removeItem("jwt");
+    localStorage.removeItem("movies");
+    localStorage.removeItem("savedMovies");
     history.push("/signin");
   }
 
@@ -194,6 +196,9 @@ function App() {
     setSearchText(search);
     setIsPreloaderActive(false);
     const preservedMovies = JSON.parse(localStorage.getItem(movies));
+    if (!preservedMovies) {
+      return;
+    }
     if (isChecked) {
       console.log(isChecked)
       const shortMovie = preservedMovies.filter((movie) => {
