@@ -33,6 +33,10 @@
     padding-right: 0;
 }
 
+.form__button-container-unvalid {
+    background: grey;
+}
+
 .form__field {
     width: 96.21%;
     height: 46px;
@@ -75,7 +79,7 @@
     text-decoration: none;
 }
 
-.form__button-container:hover {
+.form__button-container:valid:hover {
     opacity: 0.8;
     cursor: pointer;
     transition-duration: .5s;

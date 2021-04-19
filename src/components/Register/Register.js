@@ -6,6 +6,7 @@ import logo from '../../images/logo.svg';
 function Register(props) {
 
     const [errors, setErrors] = React.useState({});
+    const [isValid, setIsValid] = React.useState(false);
 
     const [data, setData] = React.useState({
         name: '',
@@ -27,7 +28,11 @@ function Register(props) {
         setErrors({ 
             ...errors, 
             [name]: e.target.validationMessage });
+            setIsValid(e.target.closest("form").checkValidity());
     }
+
+    const validBtnClass = (`form__button-container ${!isValid ? 
+        'form__button-container-unvalid' : 'form__button-container' }`);
 
     return ( 
         <section className="form">
@@ -50,7 +55,7 @@ function Register(props) {
                 <input className="form__field form__field_input_password" id="password" name="password" type="password"
                     required onChange={handleChange} />
                     <span id="password-error" className="form__field-error">{errors.password}</span>
-                <button type="submit" className="form__button-container">Зарегистрироваться</button>
+                <button type="submit" className={validBtnClass} disabled={!isValid}>Зарегистрироваться</button>
             </form>
             <div className="form__signin">
                 <p>Уже зарегистрированы?
