@@ -13,7 +13,6 @@ function SavedMovies(props) {
         <SearchForm 
         togglePreloader={props.togglePreloader}
         toggleCheckboxSave={props.toggleCheckboxSave}
-        onsearchMovie={props.onsearchMovie} 
         searchInSaveMovie={props.searchInSaveMovie} 
         currentPath={props.currentPath} />
         <MoviesCardList 

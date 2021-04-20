@@ -15,6 +15,10 @@ function MoviesCardList(props) {
     const [moreMovies, setMoreMovies] = React.useState(0);
 
     React.useEffect(() => {
+        if (width > 1280) {
+            setMoviesList(12);
+            setMoreMovies(3);
+        }
         if (width <= 1280) {
             setMoviesList(12);
             setMoreMovies(3);

@@ -13,9 +13,8 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import './App.css';
 
-import ApiMovies from '../../utils/MoviesApi';
-import Api from '../../utils/MainApi';
-
+import apiMovies from '../../utils/MoviesApi';
+import api from '../../utils/MainApi';
 
 function App() {
 
@@ -37,7 +36,7 @@ function App() {
       return;
     }
 
-    Api.getUserInfo()
+    api.getUserInfo()
       .then((userInfo) => {
         setCurrentUser(userInfo);
       })
@@ -47,7 +46,7 @@ function App() {
   }, [isLoggedIn]);
 
   function handleUpdateUser(data) {
-    Api.updateUserInfo(data)
+    api.updateUserInfo(data)
       .then((userInfo) => {
         setCurrentUser(userInfo)
       })
@@ -57,9 +56,9 @@ function App() {
   }
 
   function fetchMovies() {
-    ApiMovies.getMovies()
+    apiMovies.getMovies()
       .then((data) => {
-        Api.getMovies().then(savedData => {
+        api.getMovies().then(savedData => {
           setIsPreloaderActive(false);
           data.forEach(movie => {
             const savedMovie = savedData.find(savedMovie => movie.id === savedMovie.movieId);
@@ -70,10 +69,10 @@ function App() {
             }
           });
           setIsPreloaderActive(true);
-          localStorage.setItem("movies", JSON.stringify(data));
-          localStorage.setItem("savedMovies", JSON.stringify(savedData));
           setMovies(data);
           setSavedMovies(savedData);
+          localStorage.setItem("movies", JSON.stringify(data));
+          localStorage.setItem("savedMovies", JSON.stringify(savedData));
         });
       })
       .catch((err) => {
@@ -90,14 +89,14 @@ function App() {
   }, [isLoggedIn]);
 
   function handleLogin(email, password) {
-    return Api.authorize(email, password)
+    return api.authorize(email, password)
       .then((res) => {
         if (res && res.error) {
           throw new Error(res.error)
         }
         if (res && res.token) {
           localStorage.setItem('jwt', res.token);
-          Api.refreshToken();
+          api.refreshToken();
           setLoggedIn(true);
           setCurrentUser(res);
           history.push('/movies');
@@ -115,8 +114,8 @@ function App() {
       return;
     }
     searchMovie(searchText);
-      searchInSaveMovie(searchText);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    searchInSaveMovie(searchText);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCheckboxChecked, isCheckboxCheckedonSavePage, isLoggedIn])
 
   function handleLogout() {
@@ -128,7 +127,7 @@ function App() {
   }
 
   function handleRegister(name, email, password) {
-    return Api.register(name, email, password)
+    return api.register(name, email, password)
       .then((res) => {
         if (res && res.error) {
           throw new Error(res.error)
@@ -142,7 +141,7 @@ function App() {
   }
 
   function handleSaveMovie(dataMovie) {
-    Api.saveMovie(dataMovie)
+    api.saveMovie(dataMovie)
       .then((newMovie) => {
         const newMovies = movies.map(m => m.id === newMovie.movieId ? { ...m, _id: newMovie._id, isSaved: true } : m);
         setMovies(newMovies);
@@ -153,7 +152,7 @@ function App() {
         const newSavedMovies = [newMovie, ...savedMovies];
         setSavedMovies(newSavedMovies);
 
-        const newStoredSavedMovies =  [newMovie, ...JSON.parse(localStorage.getItem("savedMovies"))];
+        const newStoredSavedMovies = [newMovie, ...JSON.parse(localStorage.getItem("savedMovies"))];
         localStorage.setItem("savedMovies", JSON.stringify(newStoredSavedMovies));
       })
       .catch((err) => {
@@ -164,7 +163,7 @@ function App() {
 
   function handleDeleteMovie(movie) {
     console.log(movie)
-    Api.deleteMovie(movie._id)
+    api.deleteMovie(movie._id)
       .then(() => {
         const newMovies = movies.map(m => m.id === movie.movieId ? { ...m, isSaved: false } : m);
         setMovies(newMovies);
@@ -183,7 +182,6 @@ function App() {
         alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
       })
   }
-
   function searchMovie(search) {
     searchMovieCallback(search, 'movies', isCheckboxChecked, setMovies);
   }
@@ -238,18 +236,18 @@ function App() {
           <div className="main">
             <Switch>
               <Route path='/signup'>
-              {isLoggedIn ? (
-                <Redirect to="/movies" />
-              ) : (
-                <Register onRegister={handleRegister} />
-              )}
+                {isLoggedIn ? (
+                  <Redirect to="/movies" />
+                ) : (
+                  <Register onRegister={handleRegister} />
+                )}
               </Route>
               <Route path='/signin'>
-              {isLoggedIn ? (
-                <Redirect to="/movies" />
-              ) : (
-                <Login onLogin={handleLogin} />
-              )}
+                {isLoggedIn ? (
+                  <Redirect to="/movies" />
+                ) : (
+                  <Login onLogin={handleLogin} />
+                )}
               </Route>
               <Route exact path='/'>
                 <Main loggedIn={isLoggedIn} />
@@ -269,7 +267,6 @@ function App() {
               <ProtectedRoute path='/saved-movies'
                 movies={movies}
                 loggedIn={isLoggedIn}
-                onsearchMovie={searchMovie}
                 toggleCheckboxSave={toggleCheckboxSave}
                 onSaveMovie={handleSaveMovie}
                 saveMovie={savedMovies}
