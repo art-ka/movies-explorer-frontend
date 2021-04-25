@@ -2,18 +2,29 @@ import React from 'react';
 import './SavedMovies.css';
 
 import SearchForm from '../SearchForm/SearchForm';
-// import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+function SavedMovies(props) {
     return (
         <>
-        <Header />
-        <SearchForm />
-        {/* <Preloader />  */}
-        <MoviesCardList />
+        <Header loggedIn={props.loggedIn} />
+        <SearchForm 
+        togglePreloader={props.togglePreloader}
+        toggleCheckboxSave={props.toggleCheckboxSave}
+        searchInSaveMovie={props.searchInSaveMovie} 
+        currentPath={props.currentPath} />
+        <MoviesCardList 
+        movies={props.movies} 
+        message={props.message} 
+        onSaveMovie={props.onSaveMovie} 
+        saveMovie={props.saveMovie}
+        onDeleteMovie={props.onDeleteMovie}
+        isLoadSearch={props.isLoadSearch}
+        togglePreloader={props.togglePreloader} 
+        currentPath={props.currentPath} 
+        />
         <Footer />
         </>
     )

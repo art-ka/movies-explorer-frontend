@@ -12,6 +12,7 @@
     padding-left: 0;
     margin: auto;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .movieslist__more {
@@ -33,6 +34,23 @@
     opacity: .6;
     transition-duration: .5s;
     cursor: pointer;
+}
+
+.movieslist__not-found {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 20px;
+    color: grey;
+    gap: 0;
+}
+
+.movieslist__not-found-hidden {
+    display: none;
+}
+
+.movieslist__more-hidden {
+    display: none;
 }
 
 @media screen and (max-width: 768px) and (min-width: 320px) {
