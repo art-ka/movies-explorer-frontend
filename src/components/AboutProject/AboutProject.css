@@ -13,16 +13,7 @@
     padding-bottom: 23px;
     margin-bottom: 0;
     margin-top: 0;
-}
-
-.aboutproject__title::after {
-    position: absolute;
-    content: '';
-    opacity: 0.7;
     border-bottom: 1px solid #000;
-    width: 89.06%;
-    display: block;
-    margin-top: 23px;
 }
 
 .aboutproject__table {
